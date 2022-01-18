@@ -1,12 +1,14 @@
-import React, { Component, createRef } from 'react'
+import React, { useState, Component, createRef } from 'react'
 import io from 'socket.io-client/dist/socket.io.js';
 import Instructions from '../Instructions';
-import { Link } from "react-router-dom"
-import check from "../img/check.svg"
-import crest from "../img/crest.svg"
+import { Link } from "react-router-dom";
+import check from "../img/check.svg";
+import crest from "../img/crest.svg";
+
+import "../css/style.css";
 
 export const Interview = () => {
-    const [type, switchType] = React.useState("instruction")
+    const [type, switchType] = useState("instruction")
     const video = createRef()
 
     const constraints = {
@@ -66,18 +68,28 @@ export const Interview = () => {
         case "instruction":
             content = (
                 <div>
-                    <div className='shortInstruction'>
-                        Интсрукция
-                        {Instructions.shortInstruction()}
-                    </div>
-                    <div className='qw'>
-                        <div className='indicator'> </div>
-                        <div>
-                            Вопрос
+                    <div className="shortInstruction">
+                        <div className="shortInstruction__title">Инструкция:</div>
+                        <div className="shortInstruction__body">
+                            {Instructions.shortInstruction()}
                         </div>
-                        <div className='indicator'> </div>
                     </div>
-                    <div>
+
+                    <div className="question">
+                        <div className="question__header"></div>
+                        <div className="question__body">
+                            <div className="question__text">
+                                Почему вы выбрали эту специальность/университет?
+                            </div>
+                        </div>
+                        <div className="question__footer">
+                            <div className="question__footer-text">
+                                Отвечайте на этот вопрос честно/ можете рассказать правду
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="interviewButton">
                         <button onClick={() => switchType("record")}>
                             Начать ответ
                         </button>
@@ -90,17 +102,21 @@ export const Interview = () => {
             content = (
                 <div>
                     <div className="video">
-                        <div>
-                            <video ref={video} muted>Устройство видеозаписи недоступно</video>
-                            <div>
-                                скажите правду
+                        <div className="video__content">
+                            <div className="video__body">
+                                <video ref={video} muted>Устройство видеозаписи недоступно</video>
+                                <div className="video__label">
+                                    <div className="video__label-text">скажите правду</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        Вопрос
+
+                    <div className="interQuetion">
+                        <div className="interQuetion__body">Почему вы выбрали эту специальность/университет?</div> 
                     </div>
-                    <div>
+
+                    <div className="interviewButton buttonClose">
                         <button onClick={() => { switchType("instruction"); turnof() }}>
                             Закончить ответ
                         </button>
