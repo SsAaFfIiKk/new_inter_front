@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
+import CheckUser from './CheckUser'
+import InterIns from './pages/InterIns'
+import { Interview } from './pages/Interview'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    return (
+        <Router basename="/interview">
+            <Switch>
+                <Route path="/login">
+                    <CheckUser />
+                </Route>
+                <Route path="/interins">
+                    <InterIns />
+                </Route>
+                <Route path="/inter">
+                    <Interview />
+                </Route>
+                {/* <ProtectedRoute path="/interins">
+                    <InterIns />
+                </ProtectedRoute>
+                <ProtectedRoute path="/inter">
+                    <Interview />
+                </ProtectedRoute> */}
+                <Route path="*">
+                    <Redirect from="/" to="interins" />
+                </Route>
+            </Switch>
+        </Router>
+    )
 }
-
-export default App;
