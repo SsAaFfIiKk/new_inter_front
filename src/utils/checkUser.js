@@ -1,14 +1,13 @@
-async function checkUser (authorId, type, token) {
-    const link = 'https://mycandidate.onti.actcognitive.org/interview_back/check_user'
+async function checkUser(isuId, token) {
+    const link = 'https://mycandidate.onti.actcognitive.org/questionnaires/auth/check_user'
+
     const body = {
-        author_id: Number.parseInt(authorId),
-        id_type: type,
+        isu_id: Number.parseInt(isuId),
         token: token
     }
-
     const result = await fetch(link, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
     })
     const status = await result.json()
@@ -25,23 +24,23 @@ async function checkLocalUser() {
     }
 }
 
-async function getUserData(author_id, id_type) {
-    const link = 'https://mycandidate.onti.actcognitive.org/interview_back/get_user_info';
+async function getUserData(isu_id) {
+    const link = 'https://mycandidate.onti.actcognitive.org/questionnaires/backend/get_user_info';
     const data = {
-        "author_id": author_id,
-        "id_type": id_type
+        "id": isu_id
     };
 
     const body = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     };
 
     const response = await fetch(link, body)
     const userData = await response.json()
-    localStorage.setItem("fio", userData)
+    console.log(userData)
+    localStorage.setItem("name", userData.name)
+    localStorage.setItem("surname", userData.surname)
 
 }
 
-export {checkUser, checkLocalUser, getUserData}
+export { checkUser, checkLocalUser, getUserData }

@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react'
+import React from 'react'
 import io from 'socket.io-client/dist/socket.io.js';
 import Instructions from '../Instructions';
 import { Link } from "react-router-dom"
@@ -6,8 +6,11 @@ import check from "../img/check.svg"
 import crest from "../img/crest.svg"
 
 export const Interview = () => {
+    const [qw, setQw] = React.useState("Загружаем...")
+    const [count, upCount] = React.useState(0)
     const [type, switchType] = React.useState("instruction")
-    const video = createRef()
+
+    const videoRef = React.useRef(null)
 
     const constraints = {
         video: {
@@ -24,8 +27,15 @@ export const Interview = () => {
         }, audio: true
     }
 
-    const getData = () => {
+    React.useEffect(() => {
+        getData();
+    }, [])
+
+    const getData = async () => {
         const qw_url = "http://0.0.0.0:9999/get_questions"
+        const req = await fetch(qw_url)
+        const out = await req.json()
+        setQw(out)
     }
 
     const getVideo = () => {
@@ -33,8 +43,8 @@ export const Interview = () => {
             navigator.mediaDevices
                 .getUserMedia(constraints)
                 .then((stream) => {
-                    video.current.srcObject = stream;
-                    video.current.play();
+                    videoRef.current.srcObject = stream;
+                    videoRef.current.play();
                     // recordVideo(stream);
                 })
                 .catch((error) => {
@@ -43,8 +53,8 @@ export const Interview = () => {
         }
     }
 
-    const turnof = () => {
-        const videoElement = video.current;
+    const turnOff = () => {
+        const videoElement = videoRef.current;
         if (videoElement) {
             const stream = videoElement.srcObject;
             if (stream) {
@@ -53,11 +63,10 @@ export const Interview = () => {
                     track.stop();
                 });
             }
-
             videoElement.srcObject = null;
-            // socket.disconnect()
         }
     }
+
 
     let content;
 
@@ -73,41 +82,40 @@ export const Interview = () => {
                     <div className='qw'>
                         <div className='indicator'> </div>
                         <div>
-                            Вопрос
+                            {qw[count][1]}
                         </div>
                         <div className='indicator'> </div>
                     </div>
                     <div>
-                        <button onClick={() => switchType("record")}>
+                        <button onClick={() => { switchType("record"); getVideo() }}>
                             Начать ответ
                         </button>
                     </div>
                 </div>
             )
-            break
+            break;
         case "record":
-            getVideo()
             content = (
                 <div>
                     <div className="video">
                         <div>
-                            <video ref={video} muted>Устройство видеозаписи недоступно</video>
+                            <video ref={videoRef} muted>Устройство видеозаписи недоступно</video>
                             <div>
-                                скажите правду
+                                {qw[count][2] ? "соврите" : "скажите правду"}
                             </div>
                         </div>
                     </div>
                     <div>
-                        Вопрос
+                        {qw[count][1]}
                     </div>
                     <div>
-                        <button onClick={() => { switchType("instruction"); turnof() }}>
+                        <button onClick={() => { turnOff(); switchType("instruction"); upCount(count + 1) }}>
                             Закончить ответ
                         </button>
                     </div>
                 </div>
             )
-            break
+            break;
     }
 
     return (

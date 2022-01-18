@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { withRouter } from "react-router";
-import {checkUser, getUserData} from './utils/checkUser';
+import { checkUser, getUserData } from './utils/checkUser';
 import { Redirect } from 'react-router';
 
 class CheckUser extends Component {
@@ -10,22 +10,20 @@ class CheckUser extends Component {
             isRegistered: false
         }
     }
-    
 
     async componentDidMount() {
         const query = new URLSearchParams(this.props.location.search)
-        const authorId = query.get('author_id')
-        const type = query.get('type')
+        const isuId = query.get('isu_id')
         const token = query.get('token')
 
-        if (authorId && type && token) {
-            const isRegistered = await checkUser(authorId, type, token)
-            this.setState({isRegistered: isRegistered})
-            
+        if (isuId && token) {
+            this.setState({ data_ok: true })
+            const isRegistered = await checkUser(isuId, token)
+            this.setState({ isRegistered: isRegistered })
             if (isRegistered) {
                 localStorage.setItem('token', token)
-                localStorage.setItem('id', authorId)
-                getUserData(authorId, type)
+                localStorage.setItem('id', isuId)
+                getUserData(isuId)
             }
         }
     }
