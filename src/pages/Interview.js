@@ -116,7 +116,7 @@ export const Interview = () => {
                         <div className="interQuetion__body">Почему вы выбрали эту специальность/университет?</div> 
                     </div>
 
-                    <div className="interviewButton buttonClose">
+                    <div className="interviewButton buttonSmall">
                         <button onClick={() => { switchType("instruction"); turnof() }}>
                             Закончить ответ
                         </button>
@@ -127,6 +127,8 @@ export const Interview = () => {
     }
 
     return (
-        content
+        <div className="container">
+            {content}
+        </div>
     )
 }

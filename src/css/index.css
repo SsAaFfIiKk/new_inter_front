@@ -127,10 +127,19 @@ body {
     background: #F7F8FC;
     font-family: Arial, helvetica, sans-serif;
     margin-bottom: 15px;
-    margin-left: 40px;
-    margin-right: 50px;
 }
 
-.indicator {
-    background-color: #855CF8;
+.container {
+	width: 100%;
+	max-width: 1140px;
+	overflow: hidden;
+	margin: 0 auto;
+	padding-right: 15px;
 }
+
+.container:before, .container:after {
+	content: " ";
+	display: table;
+}
+
+.container:after { clear: both; }
