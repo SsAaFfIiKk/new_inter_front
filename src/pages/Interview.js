@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useState, Component, createRef } from 'react'
 import io from 'socket.io-client/dist/socket.io.js';
 import Instructions from '../Instructions';
-import { Link } from "react-router-dom"
-import check from "../img/check.svg"
-import crest from "../img/crest.svg"
+import { Link } from "react-router-dom";
+import check from "../img/check.svg";
+import crest from "../img/crest.svg";
+
+import "../css/style.css";
 
 export const Interview = () => {
+
     const [qw, setQw] = React.useState("Загружаем...")
     const [count, upCount] = React.useState(0)
-    const [type, switchType] = React.useState("instruction")
-
     const videoRef = React.useRef(null)
+    const [type, switchType] = useState("instruction")
 
     const constraints = {
         video: {
@@ -91,18 +93,27 @@ export const Interview = () => {
         case "instruction":
             content = (
                 <div>
-                    <div className='shortInstruction'>
-                        Интсрукция
-                        {Instructions.shortInstruction()}
-                    </div>
-                    <div className='qw'>
-                        <div className='indicator'> </div>
-                        <div>
-                            {qw[count][1]}
+                    <div className="shortInstruction">
+                        <div className="shortInstruction__title">Инструкция:</div>
+                        <div className="shortInstruction__body">
+                            {Instructions.shortInstruction()}
                         </div>
-                        <div className='indicator'> </div>
                     </div>
-                    <div>
+                    <div className="question">
+                        <div className={qw[count][2] ? "question__header_lie" : "question__header"}></div>
+                        <div className="question__body">
+                            <div className="question__text">
+                                {qw[count][1]}
+                            </div>
+                        </div>
+                        <div className={qw[count][2] ? "question__footer_lie" : "question__footer"}>
+                            <div className="question__footer-text">
+                                {qw[count][2] ? "Вам нужно солгать на этот вопрсос" : "Отвечайте на этот вопрос честно/ можете рассказать правду"}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="interviewButton">
                         <button onClick={() => { switchType("record"); getVideo() }}>
                             Начать ответ
                         </button>
@@ -110,21 +121,26 @@ export const Interview = () => {
                 </div>
             )
             break;
+        
         case "record":
             content = (
                 <div>
-                    <div className="video">
-                        <div>
-                            <video ref={videoRef} muted>Устройство видеозаписи недоступно</video>
-                            <div>
-                                {qw[count][2] ? "соврите" : "скажите правду"}
+                    <div className="video" style={{ background: qw[count][2] ? "#EB5757" : "#855CF8" }}>
+                        <div className="video__content">
+                            <div className="video__body">
+                                <video ref={videoRef} muted>Устройство видеозаписи недоступно</video>
+                                <div className="video__label" style={{ background: qw[count][2] ? "#EB5757" : "#855CF8"}}>
+                                    <div className="video__label-text">{qw[count][2] ? "скажите ложь" : "скажите правду"}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        {qw[count][1]}
+
+                    <div className="interQuetion">
+                        <div className="interQuetion__body">{qw[count][1]}</div>
                     </div>
-                    <div>
+
+                    <div className="interviewButton buttonClose">
                         <button onClick={() => { turnOff(); switchType("instruction"); upCount(count + 1) }}>
                             Закончить ответ
                         </button>
