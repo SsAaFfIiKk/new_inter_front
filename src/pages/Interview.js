@@ -1,18 +1,19 @@
-import React, { useState, Component, createRef } from 'react'
+import React, { useState, useRef } from 'react'
 import io from 'socket.io-client/dist/socket.io.js';
 import Instructions from '../Instructions';
-import { Link } from "react-router-dom";
-import check from "../img/check.svg";
-import crest from "../img/crest.svg";
+
 
 import "../css/style.css";
 
 export const Interview = () => {
 
-    const [qw, setQw] = React.useState("Загружаем...")
-    const [count, upCount] = React.useState(0)
-    const videoRef = React.useRef(null)
+    const [count, upCount] = useState(0)
+    const [qw, setQw] = useState("Загружаем...")
     const [type, switchType] = useState("instruction")
+    const [folder ,setFolder] = useState()
+    const [filename ,setFilene] = useState()
+
+    const videoRef = useRef(null)
 
     const constraints = {
         video: {
@@ -64,7 +65,8 @@ export const Interview = () => {
         mediaRecorder.ondataavailable = (event) => {
             if (event.data && event.data.size > 0) {
                 socket.emit('recorded-chunk', {
-                    filename: this.filename,
+                    folder: folder,
+                    filename: filename,
                     chunk: event.data,
                 });
             }
