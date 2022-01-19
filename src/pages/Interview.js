@@ -27,6 +27,8 @@ export const Interview = () => {
         }, audio: true
     }
 
+    const socket = io("https://mycandidate.onti.actcognitive.org", { path: '/questionnaires/inter_backend/socket.io' })
+
     React.useEffect(() => {
         getData();
     }, [])
@@ -53,6 +55,20 @@ export const Interview = () => {
         }
     }
 
+    const recordVideo = (stream) => {
+        const mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.start(1000);
+
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data && event.data.size > 0) {
+                socket.emit('recorded-chunk', {
+                    filename: this.filename,
+                    chunk: event.data,
+                });
+            }
+        };
+    }
+
     const turnOff = () => {
         const videoElement = videoRef.current;
         if (videoElement) {
@@ -64,9 +80,9 @@ export const Interview = () => {
                 });
             }
             videoElement.srcObject = null;
+            socket.disconnect()
         }
     }
-
 
     let content;
 

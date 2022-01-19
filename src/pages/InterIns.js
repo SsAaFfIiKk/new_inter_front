@@ -7,7 +7,7 @@ export default class InterIns extends Component {
     render() {
         return (
             <div className="info">
-                Здравствуйте, {localStorage.getItem("fio")}.
+                Здравствуйте, {localStorage.getItem("surname")} {localStorage.getItem("name")}!
                 {Instructions.longInstruction()}
                 <Link to="./inter"><button>Начать интервью</button></Link>
             </div>
