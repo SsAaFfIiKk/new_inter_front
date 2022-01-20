@@ -29,7 +29,7 @@ export const Interview = () => {
         }, audio: true
     }
 
-    const socket = io("https://mycandidate.onti.actcognitive.org", { path: '/questionnaires/inter_backend/socket.io' })
+    const socket = io("https://mycandidate.onti.actcognitive.org", { path: '/questionnaires/interview_back/socket.io' })
     // const socket = io("http://0.0.0.0:9999", { path: '/socket.io' })
 
     React.useEffect(() => {
@@ -37,8 +37,8 @@ export const Interview = () => {
     }, [])
 
     const getData = async () => {
-        const qw_url = "https://mycandidate.onti.actcognitive.org/questionnaires/inter_backend/get_questions"
-        const id_url = "https://mycandidate.onti.actcognitive.org/questionnaires/inter_backend/get_record_id"
+        const qw_url = "https://mycandidate.onti.actcognitive.org/questionnaires/interview_back/get_questions"
+        const id_url = "https://mycandidate.onti.actcognitive.org/questionnaires/interview_back/get_record_id"
 
 
         const req = await fetch(qw_url)
