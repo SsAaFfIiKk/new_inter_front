@@ -12,18 +12,18 @@ export default function App() {
                 <Route path="/login">
                     <CheckUser />
                 </Route>
-                <Route path="/interins">
+                {/* <Route path="/interins">
                     <InterIns />
                 </Route>
                 <Route path="/inter">
                     <Interview />
-                </Route>
-                {/* <ProtectedRoute path="/interins">
+                </Route> */}
+                <ProtectedRoute path="/interins">
                     <InterIns />
                 </ProtectedRoute>
                 <ProtectedRoute path="/inter">
                     <Interview />
-                </ProtectedRoute> */}
+                </ProtectedRoute>
                 <Route path="*">
                     <Redirect from="/" to="interins" />
                 </Route>

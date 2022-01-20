@@ -12,8 +12,15 @@ span {
     font-weight: bold
 }
 
+.true_text {
+    color: #855CF8;
+}
+
+.lie_text {
+    color: #EB5757;
+}
+
 button {
-    margin-left: 5px;
     padding: 5px;
     width: auto;
     color: rgb(228, 227, 235);
