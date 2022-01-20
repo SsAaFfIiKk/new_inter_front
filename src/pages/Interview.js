@@ -34,6 +34,8 @@ export const Interview = () => {
 
     React.useEffect(() => {
         getData();
+        
+        return () => turnOff();
     }, [])
 
     const getData = async () => {
