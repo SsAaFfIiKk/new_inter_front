@@ -7,7 +7,7 @@ import { Interview } from './pages/Interview'
 
 export default function App() {
     return (
-        <Router basename="questionnaires/interview">
+        <Router basename="/questionnaires/interview">
             <Switch>
                 <Route path="/login">
                     <CheckUser />
