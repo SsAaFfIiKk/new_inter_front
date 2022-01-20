@@ -8,10 +8,9 @@ import "../css/style.css";
 export const Interview = () => {
 
     const [count, upCount] = useState(0)
-    const [qw, setQw] = useState("Загружаем...")
+    const [qw, setQw] = useState([[0, "Загружаем...", 0]])
     const [type, switchType] = useState("instruction")
-    const [folder ,setFolder] = useState()
-    const [filename ,setFilene] = useState()
+    const [folder, setFolder] = useState()
 
     const videoRef = useRef(null)
 
@@ -31,16 +30,33 @@ export const Interview = () => {
     }
 
     const socket = io("https://mycandidate.onti.actcognitive.org", { path: '/questionnaires/inter_backend/socket.io' })
+    // const socket = io("http://0.0.0.0:9999", { path: '/socket.io' })
 
     React.useEffect(() => {
         getData();
     }, [])
 
     const getData = async () => {
-        const qw_url = "http://0.0.0.0:9999/get_questions"
+        const qw_url = "https://mycandidate.onti.actcognitive.org/questionnaires/inter_backend/get_questions"
+        const id_url = "https://mycandidate.onti.actcognitive.org/questionnaires/inter_backend/get_record_id"
+
+
         const req = await fetch(qw_url)
         const out = await req.json()
+
+        const body = JSON.stringify({
+            "isu_id": localStorage.getItem("id")
+        })
+
+
+        const req_id = await fetch(id_url, {
+            method: "POST",
+            body: body
+        })
+        const id_out = await req_id.json()
+
         setQw(out)
+        setFolder(localStorage.getItem("id") + "_" + id_out)
     }
 
     const getVideo = () => {
@@ -50,7 +66,7 @@ export const Interview = () => {
                 .then((stream) => {
                     videoRef.current.srcObject = stream;
                     videoRef.current.play();
-                    // recordVideo(stream);
+                    recordVideo(stream);
                 })
                 .catch((error) => {
                     alert('Устройство видеозаписи недоступно');
@@ -66,7 +82,7 @@ export const Interview = () => {
             if (event.data && event.data.size > 0) {
                 socket.emit('recorded-chunk', {
                     folder: folder,
-                    filename: filename,
+                    filename: qw[count][0] + "_" + qw[count][2],
                     chunk: event.data,
                 });
             }
@@ -86,6 +102,17 @@ export const Interview = () => {
             videoElement.srcObject = null;
             socket.disconnect()
         }
+    }
+
+    const nextQw = () => {
+        turnOff()
+        switchType("instruction")
+        upCount(count + 1)
+    }
+
+    const finish = () => {
+        turnOff()
+        switchType("finish")
     }
 
     let content;
@@ -123,7 +150,7 @@ export const Interview = () => {
                 </div>
             )
             break;
-        
+
         case "record":
             content = (
                 <div>
@@ -131,7 +158,7 @@ export const Interview = () => {
                         <div className="video__content">
                             <div className="video__body">
                                 <video ref={videoRef} muted>Устройство видеозаписи недоступно</video>
-                                <div className="video__label" style={{ background: qw[count][2] ? "#EB5757" : "#855CF8"}}>
+                                <div className="video__label" style={{ background: qw[count][2] ? "#EB5757" : "#855CF8" }}>
                                     <div className="video__label-text">{qw[count][2] ? "скажите ложь" : "скажите правду"}</div>
                                 </div>
                             </div>
@@ -143,13 +170,20 @@ export const Interview = () => {
                     </div>
 
                     <div className="interviewButton buttonClose">
-                        <button onClick={() => { turnOff(); switchType("instruction"); upCount(count + 1) }}>
+                        <button onClick={count === qw.length-1 ? finish : nextQw}>
                             Закончить ответ
                         </button>
                     </div>
                 </div>
             )
             break;
+
+        case "finish":
+            content = (
+                <div>
+                    Спасибо за прохождение интервью!
+                </div>
+            )
     }
 
     return (
