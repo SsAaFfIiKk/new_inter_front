@@ -131,6 +131,46 @@
     cursor: pointer;
 }
 
+.interviewButtonActive {
+    display: inline-block;
+    width: 100%;
+    background: #342C9F;
+    border: 1px solid #342C9F;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 36px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.interviewButtonDisabled {
+    display: inline-block;
+    width: 100%;
+    background: #342C9F;
+    border: 1px solid #342C9F;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 36px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    cursor: none;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 .buttonClose button {
     width: 312px;
 }

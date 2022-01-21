@@ -178,7 +178,7 @@ export const Interview = () => {
                     <div className="video" style={{ background: qw[count][2] ? "#EB5757" : "#855CF8" }}>
                         <div className="video__content">
                             <div className="video__body">
-                                <video ref={videoRef} muted>Устройство видеозаписи недоступно</video>
+                                <video ref={videoRef} muted>Устройство видеозаписи недосgitтупно</video>
                                 <div className="video__label" style={{ background: qw[count][2] ? "#EB5757" : "#855CF8" }}>
                                     <div className="video__label-text">{qw[count][2] ? "скажите ложь" : "скажите правду"}</div>
                                 </div>
@@ -190,8 +190,10 @@ export const Interview = () => {
                         <div className="interQuetion__body">{qw[count][1]}</div>
                     </div>
 
-                    <div className="interviewButton buttonClose">
-                        <button onClick={count === qw.length - 1 ? finish : nextQw} disabled={timer > 0 ? true : false}>
+                    <div className="buttonClose">
+                        <button
+                            className={timer > 0 ? "interviewButtonDisabled" : "interviewButtonActive"}
+                            onClick={count === qw.length - 1 ? finish : nextQw}>
                             Закончить ответ
                         </button>
                     </div>
