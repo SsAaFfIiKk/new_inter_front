@@ -4,11 +4,15 @@ import ProtectedRoute from "./ProtectedRoute";
 import CheckUser from './CheckUser'
 import InterIns from './pages/InterIns'
 import { Interview } from './pages/Interview'
+import { GetUrl } from "./pages/GetUrl";
 
 export default function App() {
     return (
         <Router basename="/questionnaires/interview">
             <Switch>
+                <Route path="/get_personal_url">
+                    <GetUrl/>
+                </Route>
                 <Route path="/login">
                     <CheckUser />
                 </Route>
