@@ -12,12 +12,6 @@ export default function App() {
                 <Route path="/login">
                     <CheckUser />
                 </Route>
-                {/* <Route path="/interins">
-                    <InterIns />
-                </Route>
-                <Route path="/inter">
-                    <Interview />
-                </Route> */}
                 <ProtectedRoute path="/interins">
                     <InterIns />
                 </ProtectedRoute>

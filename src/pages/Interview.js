@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import io from 'socket.io-client/dist/socket.io.js';
 import Instructions from '../Instructions';
 
@@ -11,6 +11,8 @@ export const Interview = () => {
     const [qw, setQw] = useState([[0, "Загружаем...", 0]])
     const [type, switchType] = useState("instruction")
     const [folder, setFolder] = useState()
+    const [timer, setTimer] = useState(10);
+    const [isActive, setIsActive] = useState(false);
 
     const videoRef = useRef(null)
 
@@ -30,13 +32,28 @@ export const Interview = () => {
     }
 
     const socket = io("https://mycandidate.onti.actcognitive.org", { path: '/questionnaires/interview_back/socket.io' })
-    // const socket = io("http://0.0.0.0:9999", { path: '/socket.io' })
 
-    React.useEffect(() => {
+    useEffect(() => {
         getData();
-        
         return () => turnOff();
     }, [])
+
+    useEffect(() => {
+        let interval = null;
+
+        if (isActive && timer > 0) {
+            interval = setInterval(() => {
+                setTimer(timer => timer - 1);
+            }, 1000);
+        }
+        else if (isActive && timer === 0) {
+            setIsActive(false)
+            clearInterval(interval);
+        }
+
+        return () => clearInterval(interval);
+    }, [isActive, timer]);
+
 
     const getData = async () => {
         const qw_url = "https://mycandidate.onti.actcognitive.org/questionnaires/interview_back/get_questions"
@@ -122,6 +139,7 @@ export const Interview = () => {
     switch (type) {
         default:
         case "instruction":
+            if (timer === 0) { setTimer(10); setIsActive(false) }
             content = (
                 <div>
                     <div className="shortInstruction">
@@ -154,6 +172,7 @@ export const Interview = () => {
             break;
 
         case "record":
+            if (!isActive) setIsActive(true)
             content = (
                 <div>
                     <div className="video" style={{ background: qw[count][2] ? "#EB5757" : "#855CF8" }}>
@@ -172,7 +191,7 @@ export const Interview = () => {
                     </div>
 
                     <div className="interviewButton buttonClose">
-                        <button onClick={count === qw.length-1 ? finish : nextQw}>
+                        <button onClick={count === qw.length - 1 ? finish : nextQw} disabled={timer > 0 ? true : false}>
                             Закончить ответ
                         </button>
                     </div>
