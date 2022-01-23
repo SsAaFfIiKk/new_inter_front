@@ -44,7 +44,9 @@
 
 .question {
     margin-top: 55px;
-    border-radius: 10px;
+    /* border-radius: 10px; */
+    border-radius: 4px;
+    box-shadow: 0 0 4px rgba(43, 43, 43, 0.4);
 }
 
 .question__body {
@@ -79,12 +81,14 @@
 .question__header_lie,
 .question__header {
     height: 50px;
-    border-radius: 10px 10px 0px 0px;
+    /* border-radius: 10px 10px 0px 0px; */
+    border-radius: 4px 4px 0px 0px;
 }
 
 .question__footer_lie,
 .question__footer {
-    border-radius: 0px 0px 10px 10px;
+    /* border-radius: 0px 0px 10px 10px; */
+    border-radius: 0px 0px 4px 4px;
 }
 
 .question__footer-text {
@@ -113,57 +117,60 @@
 }
 
 .interviewButton button {
-    display: inline-block;
-    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    /* width: 100%; */
     background: #342C9F;
     border: 1px solid #342C9F;
     box-sizing: border-box;
     border-radius: 4px;
-    height: 36px;
+    /* height: 36px; */
     font-weight: 600;
-    font-size: 14px;
-    line-height: 24px;
-    align-items: center;
+    /* font-size: 14px;
+    line-height: 24px; */
+    /* align-items: center; */
     text-align: center;
-    letter-spacing: 0.01em;
+    /* letter-spacing: 0.01em; */
     text-transform: uppercase;
     color: #FFFFFF;
     cursor: pointer;
 }
 
 .interviewButtonActive {
-    display: inline-block;
-    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    /* width: 100%; */
     background: #342C9F;
     border: 1px solid #342C9F;
     box-sizing: border-box;
     border-radius: 4px;
-    height: 36px;
+    /* height: 36px; */
     font-weight: 600;
-    font-size: 14px;
-    line-height: 24px;
-    align-items: center;
+    /* font-size: 14px;
+    line-height: 24px; */
+    /* align-items: center; */
     text-align: center;
-    letter-spacing: 0.01em;
+    /* letter-spacing: 0.01em; */
     text-transform: uppercase;
     color: #FFFFFF;
     cursor: pointer;
 }
 
 .interviewButtonDisabled {
-    display: inline-block;
-    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    /* width: 100%; */
     background: #342C9F;
     border: 1px solid #342C9F;
     box-sizing: border-box;
     border-radius: 4px;
-    height: 36px;
+    /* height: 36px; */
     font-weight: 600;
-    font-size: 14px;
-    line-height: 24px;
-    align-items: center;
+    /* font-size: 14px;
+    line-height: 24px; */
+    /* align-items: center; */
     text-align: center;
-    letter-spacing: 0.01em;
+    /* letter-spacing: 0.01em; */
     text-transform: uppercase;
     color: #FFFFFF;
     cursor: none;
@@ -172,7 +179,7 @@
 }
 
 .buttonClose button {
-    width: 312px;
+    /* width: 312px; */
 }
 
 .interviewButton button:hover {
