@@ -11,7 +11,6 @@ export const Interview = () => {
     const [folder, setFolder] = useState();
     const [timer, setTimer] = useState(11);
     const [isActive, setIsActive] = useState(false);
-    const [writing, setWriting] = useState('Загрузка камеры...')
 
     const videoRef = useRef(null);
 
@@ -86,7 +85,6 @@ export const Interview = () => {
                     videoRef.current.srcObject = stream;
                     videoRef.current.play();
                     recordVideo(stream);
-                    setWriting('REC');
                     if (!isActive) setIsActive(true);
                 })
                 .catch((error) => {
@@ -247,7 +245,6 @@ export const Interview = () => {
                             Закончить ответ
                         </button>
                     </div>
-                    <div>{writing}</div>
                 </div>
             );
             break;
