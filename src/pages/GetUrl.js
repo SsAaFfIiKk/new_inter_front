@@ -6,7 +6,7 @@ export const GetUrl = () => {
     const [err, setErr] = useState(false);
     const [isu_id, setId] = useState();
     const [url, setUrl] = useState();
-    const [messsage, setMess] = useState();
+    const [isUrl, setIsUrl] = useState(false)
 
     const check_id = (e) => {
         e.preventDefault();
@@ -27,8 +27,8 @@ export const GetUrl = () => {
                 .then(res => res.json())
                 .then(out => {
                     if (!out) {
-                        setMess('У данного id нет доступа');
                         setErr(true);
+                        setIsUrl(false)
                     }
                     else { setErr(false); get_personal_url() };
                 });
@@ -50,7 +50,7 @@ export const GetUrl = () => {
 
         fetch(get_url, body)
             .then(res => res.json())
-            .then(out => { setUrl(out) });
+            .then(out => { setUrl(out); setIsUrl(true) });
 
     }
 
@@ -58,30 +58,35 @@ export const GetUrl = () => {
         <div>
             <form className="loginform" onSubmit={check_id}>
                 <header lassName={err ? 'warning warning-active' : 'warning'}>
-                    {err && (
-                        <div>
-                            {messsage}
-                        </div>
-                    )}
                 </header>
                 <div className="group">
-                    <label htmlFor="">Isu id</label>
+                    <label htmlFor="isu_id">Isu Id</label>
                     <input
                         type="number"
                         name="isu_id"
+                        className="loginput"
                         value={isu_id}
                         onChange={e => setId(e.target.value)}
                     />
                 </div>
                 <div className="group">
                     <button
-                        button className="loginb" 
+                        button className="loginb"
                         type="submit">Получить ссылку
                     </button>
                 </div>
-                <div className="group">
-                    {url}
-                </div>
+                {isUrl &&
+                    <div className="result">
+                        <a href={url}>
+                            Ваша ссылка
+                        </a>
+                    </div>}
+                {err && (
+                    <div className="result"> 
+                        У данного id нет доступа
+                    </div>
+                )}
+
             </form>
         </div>
     )

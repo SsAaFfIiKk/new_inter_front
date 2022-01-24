@@ -29,7 +29,7 @@ body {
     padding: 10px;
     background: #ebedf4;
     /* background: #3a3a3a; */
-    
+
     line-height: 1.5;
     box-sizing: border-box;
     /* text-align: justify; */
@@ -56,7 +56,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-weight: 600;
-    box-shadow: 0 0 4px rgba(0,0,0,0.4);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
     transition: 0.2s;
 }
 
@@ -84,6 +84,21 @@ button:hover {
     .instruction-flex {
         flex-wrap: wrap;
     }
+}
+
+.loginput {
+    margin-top: 0px;
+    font-size: 14px;
+    height: 50px;
+    border-radius: 4px;
+    border: 1px solid #e6e6e6;
+    padding-left: 15px;
+    box-shadow: 2px 2px 10px 1px rgba(226, 226, 226, 0.82);
+}
+
+.result {
+    display: flex;
+    justify-content: center;
 }
 
 .custom {
