@@ -9,8 +9,9 @@ export const Interview = () => {
     const [qw, setQw] = useState([[0, "Загружаем...", 0]]);
     const [type, switchType] = useState("instruction");
     const [folder, setFolder] = useState();
-    const [timer, setTimer] = useState(10);
+    const [timer, setTimer] = useState(11);
     const [isActive, setIsActive] = useState(false);
+    const [writing, setWriting] = useState('Загрузка камеры...')
 
     const videoRef = useRef(null);
 
@@ -85,6 +86,8 @@ export const Interview = () => {
                     videoRef.current.srcObject = stream;
                     videoRef.current.play();
                     recordVideo(stream);
+                    setWriting('REC');
+                    if (!isActive) setIsActive(true);
                 })
                 .catch((error) => {
                     alert("Устройство видеозаписи недоступно");
@@ -139,7 +142,7 @@ export const Interview = () => {
         default:
         case "instruction":
             if (timer === 0) {
-                setTimer(10);
+                setTimer(11);
                 setIsActive(false);
             }
             content = (
@@ -202,7 +205,6 @@ export const Interview = () => {
             break;
 
         case "record":
-            if (!isActive) setIsActive(true);
             content = (
                 <div>
                     <div
@@ -245,6 +247,7 @@ export const Interview = () => {
                             Закончить ответ
                         </button>
                     </div>
+                    <div>{writing}</div>
                 </div>
             );
             break;
