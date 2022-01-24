@@ -39,6 +39,17 @@ span {
     font-weight: 600
 }
 
+ol {
+    list-style: none;
+    counter-reset: li;
+}
+
+li:before {
+    counter-increment: li;
+    content: counters(li, ".") ". ";
+    font-weight: 600;
+}
+
 .true_text {
     color: #855CF8;
 }
