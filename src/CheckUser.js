@@ -19,11 +19,12 @@ class CheckUser extends Component {
         if (isuId && token) {
             this.setState({ data_ok: true })
             const isRegistered = await checkUser(isuId, token)
-            this.setState({ isRegistered: isRegistered })
+            
             if (isRegistered) {
                 localStorage.setItem('token', token)
                 localStorage.setItem('id', isuId)
-                getUserData(isuId)
+                await getUserData(isuId)
+                this.setState({ isRegistered: isRegistered })
             }
         }
     }

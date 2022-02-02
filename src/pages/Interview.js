@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import io from "socket.io-client/dist/socket.io.js";
 import Instructions from "../Instructions";
 
@@ -12,6 +12,9 @@ export const Interview = () => {
     const [timer, setTimer] = useState(11);
     const [isActive, setIsActive] = useState(false);
 
+    const socket = useMemo(() => io("https://mycandidate.onti.actcognitive.org", {
+        path: "/questionnaires/interview_back/socket.io",
+    }))
     const videoRef = useRef(null);
 
     const constraints = {
@@ -30,9 +33,9 @@ export const Interview = () => {
         audio: true,
     };
 
-    const socket = io("https://mycandidate.onti.actcognitive.org", {
-        path: "/questionnaires/interview_back/socket.io",
-    });
+    // const socket = io("https://mycandidate.onti.actcognitive.org", {
+    //     path: "/questionnaires/interview_back/socket.io",
+    // });
 
     useEffect(() => {
         getData();

@@ -18,7 +18,7 @@ async function checkLocalUser() {
     const isuId = localStorage.getItem('id')
     const token = localStorage.getItem('token')
     if (isuId && token) {
-        return await checkUser(isuId, token)
+        return true
     } else {
         return false
     }
@@ -37,7 +37,6 @@ async function getUserData(isu_id) {
 
     const response = await fetch(link, body)
     const userData = await response.json()
-    console.log(userData)
     localStorage.setItem("name", userData.name)
     localStorage.setItem("surname", userData.surname)
 
